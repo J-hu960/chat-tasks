@@ -38,6 +38,7 @@ import { GetTasksQueryHandler } from './core/application/conversations/tasks/get
     JwtModule.register({
       secret: process.env.JWT_SECRET, 
       signOptions: { expiresIn: "3h" },
+      
     }),
   ],
   controllers: [AppController,RegisterMessageController,RegisterUserController,LoginUserController,GetTasksController],
