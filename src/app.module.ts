@@ -28,6 +28,7 @@ import { LogInUserCommandHandler } from './core/application/auth/login-user.comm
 import { JwtAuthGuard } from './core/ui/api/auth/authguard';
 import { GetTasksController } from './core/ui/api/conversations/tasks/get-tasks.controller';
 import { GetTasksQueryHandler } from './core/application/conversations/tasks/get-tasks.query-handler';
+import { VersionController } from './core/ui/api/version-check';
 // import { TaskSseController } from './core/ui/api/conversations/tasks/task.created.controller';
 
 @Module({
@@ -43,7 +44,7 @@ import { GetTasksQueryHandler } from './core/application/conversations/tasks/get
     }),
   ],
   controllers: [AppController,RegisterMessageController,RegisterUserController,
-    LoginUserController,GetTasksController],
+    LoginUserController,GetTasksController,VersionController],
   providers: [AppService, RegisterMessageCommandHandler,
      ReservationCreatedHandler,RegisterUserCommandHandler,
     JwtStrategy,LogInUserCommandHandler,JwtAuthGuard,GetTasksQueryHandler,
