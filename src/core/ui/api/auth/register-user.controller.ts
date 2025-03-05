@@ -9,7 +9,7 @@ class RegisterUserDTO{
         readonly username:string,
         readonly mail:string,
         readonly password:string,
-        readonly repeatedPassord:string
+        readonly repeatedPassword:string
     ){}
 }
 @Controller()
@@ -25,7 +25,7 @@ export class RegisterUserController{
             const result = await this.registerUserCommandHandler.handle(
                 new RegisterUserCommand(
                     registerUserDTO.username,registerUserDTO.mail,
-                    registerUserDTO.password,registerUserDTO.repeatedPassord
+                    registerUserDTO.password,registerUserDTO.repeatedPassword
                 )
             )
             await result.jwt
@@ -33,7 +33,7 @@ export class RegisterUserController{
             response.status(HttpStatus.CREATED).send({
                 token:result.jwt,
                 id:result.user.id.value
-            })
+            });
             
         } catch (error) {
             catchError(error,response)

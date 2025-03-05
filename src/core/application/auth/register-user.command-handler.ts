@@ -26,7 +26,7 @@ export class RegisterUserCommandHandler{
             throw BadInputForUser.withValue(command.mail);
         }
 
-        user = User.create(command.username,command.password,command.mail);
+        user = User.create(command.username,command.password,command.mail,"","");
 
         this.userRepository.save(user);
 

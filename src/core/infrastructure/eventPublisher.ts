@@ -5,7 +5,7 @@ import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class EventEmmiterNest implements EventPublisher{
- constructor(private eventEmitter: EventEmitter2) {}
+ constructor(readonly eventEmitter: EventEmitter2) {}
 
     publish(events:DomainEvent[]) {
             events.forEach(

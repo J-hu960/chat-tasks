@@ -28,6 +28,7 @@ import { LogInUserCommandHandler } from './core/application/auth/login-user.comm
 import { JwtAuthGuard } from './core/ui/api/auth/authguard';
 import { GetTasksController } from './core/ui/api/conversations/tasks/get-tasks.controller';
 import { GetTasksQueryHandler } from './core/application/conversations/tasks/get-tasks.query-handler';
+// import { TaskSseController } from './core/ui/api/conversations/tasks/task.created.controller';
 
 @Module({
   imports: [EventEmitterModule.forRoot(),
@@ -41,8 +42,10 @@ import { GetTasksQueryHandler } from './core/application/conversations/tasks/get
       
     }),
   ],
-  controllers: [AppController,RegisterMessageController,RegisterUserController,LoginUserController,GetTasksController],
-  providers: [AppService, RegisterMessageCommandHandler, ReservationCreatedHandler,RegisterUserCommandHandler,
+  controllers: [AppController,RegisterMessageController,RegisterUserController,
+    LoginUserController,GetTasksController],
+  providers: [AppService, RegisterMessageCommandHandler,
+     ReservationCreatedHandler,RegisterUserCommandHandler,
     JwtStrategy,LogInUserCommandHandler,JwtAuthGuard,GetTasksQueryHandler,
     {provide:MESSAGE_REPOSITORY,useClass:MessagesRepositoryInmemory},
     {provide:EVENTEMMITER_NEST,useClass:EventEmmiterNest},

@@ -25,4 +25,21 @@ jobs:
         run: npm install
 
       - name: Run tests
-        run: npm run test -- --watch=false --maxWorkers=2
+        run: npm run test  --watch=false --maxWorkers=2
+
+      # Paso para construir la imagen Docker
+      - name: Build Docker image
+        run: |
+          docker build -t my-docker-image:latest .
+
+      # Paso para iniciar sesión en Docker Hub (si usas Docker Hub)
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: 
+          password: 
+
+      # Paso para empujar la imagen Docker a Docker Hub
+      - name: Push Docker image
+        run: |
+          docker push my-docker-image:latest

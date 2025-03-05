@@ -31,7 +31,7 @@ export class Task extends AggregateRoot{
 
         const task = new Task(id,userId,title,description,date,duration,hour);
 
-        task.recordEvent(TaskCreatedEvent.fromTask(task)) //Registrar evento de crear TASK
+        task.recordEvent(TaskCreatedEvent.fromTask(task)) 
 
         return task
 
