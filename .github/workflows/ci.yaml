@@ -29,7 +29,7 @@ jobs:
       # Construir la imagen Docker
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/chat-tasks-backend:${{ github.sha }} .
+          docker build -t ${{ secrets.DOCKERHUB_REPOSITORY }}:${{ github.sha }} .
 
       # Iniciar sesión en Docker Hub
       - name: Log in to Docker Hub
@@ -41,5 +41,5 @@ jobs:
       # Empujar la imagen Docker a Docker Hub
       - name: Push Docker image
         run: |
-          docker push ${{secrets.DOCKERHUB_REPOSITORY}}:${{ github.sha }}
+            docker push ${{ secrets.DOCKERHUB_REPOSITORY }}:${{ github.sha }}
 
