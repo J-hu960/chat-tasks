@@ -36,10 +36,10 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: 
-          password: 
+          username: ${{secrets.DOCKERHUB_USERNAME}}
+          password: ${{secrets.DOCKERHUB_PASSWORD}}
 
       # Paso para empujar la imagen Docker a Docker Hub
       - name: Push Docker image
         run: |
-          docker push my-docker-image:latest
+          docker push chat-tasks-backend:${{github.sha}}
