@@ -9,9 +9,6 @@ export class VersionController{
 
     @Get()
     handle(){
-        return {version:"1.1.0"}
+        return {version:"1.1.1"}
     }
-
-
-   
 }

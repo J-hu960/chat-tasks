@@ -18,5 +18,6 @@ ENV NODE_OPTIONS="--max-old-space-size=4096"
 
 RUN npm run build
 
+
 # Start the server using the production build
 CMD [ "node", "dist/main.js" ]
