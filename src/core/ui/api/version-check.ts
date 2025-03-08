@@ -9,6 +9,6 @@ export class VersionController{
 
     @Get()
     handle(){
-        return {version:"1.1.1"}
+        return {version:"1.1.1"} //<- cambiamos este valor (endpoint de prueba)
     }
 }

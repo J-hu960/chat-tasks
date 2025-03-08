@@ -8,4 +8,8 @@ export class TaskId extends Id{
       static new(): TaskId {
         return new TaskId(this.generate())
       }
+
+      static fromExisting(id: string): Id {
+          return new TaskId(id)
+      }
 }

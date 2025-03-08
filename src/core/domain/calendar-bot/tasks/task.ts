@@ -1,6 +1,6 @@
 import { AggregateRoot } from "../../aggregate-root";
 import { Id } from "../../id";
-import { UserId } from "../users/value-objects/id";
+import { UserId } from "../../auth/users/value-objects/id";
 import { TaskCreatedEvent } from "./task-created.event";
 import { TaskDate } from "./value-objects/date";
 import { TaskDescription } from "./value-objects/description";
@@ -8,6 +8,7 @@ import { TaskDuration } from "./value-objects/duration";
 import { TaskHour } from "./value-objects/hour";
 import { TaskId } from "./value-objects/id";
 import { TaskTitle } from "./value-objects/title";
+import { UpdateTaskCommand } from "src/core/application/conversations/tasks/update-task/update-task.command";
 
 export class Task extends AggregateRoot{
     private constructor(
@@ -36,6 +37,18 @@ export class Task extends AggregateRoot{
         return task
 
 
+
+    }
+    static fromCommand(command:UpdateTaskCommand){
+        const id = TaskId.fromExisting(command.task_id);
+        const user_id = UserId.fromExisting(command.user_id);
+        const title = TaskTitle.create(command.title);
+        const description = TaskDescription.create(command.description);
+        const hour = TaskHour.create(command.hour);
+        const duration = TaskDuration.create(command.duration);
+        const date = TaskDate.create(command.date)
+
+        return new Task(id,user_id,title,description,date,duration,hour);
 
     }
 }

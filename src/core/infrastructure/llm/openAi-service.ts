@@ -1,10 +1,10 @@
-import { MessageContent } from "src/core/domain/conversations/messages/value-objects/content";
-import { LLMService } from "src/core/domain/conversations/tasks/LLM-service";
-import { Task } from "src/core/domain/conversations/tasks/task";
+import { MessageContent } from "src/core/domain/calendar-bot/messages/value-objects/content";
+import { LLMService } from "src/core/domain/calendar-bot/tasks/LLM-service";
+import { Task } from "src/core/domain/calendar-bot/tasks/task";
 import { ChatOpenAI } from "@langchain/openai";
 import { StructuredOutputParser } from "langchain/output_parsers";
 import { z } from "zod";
-import { UserId } from "src/core/domain/conversations/users/value-objects/id";
+import { UserId } from "src/core/domain/auth/users/value-objects/id";
 
 export class OpenAIService implements LLMService {
   constructor() {}

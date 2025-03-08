@@ -1,11 +1,11 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { USER_REPOSITORY, UserRepository } from "src/core/domain/conversations/users/user.repository";
+import { USER_REPOSITORY, UserRepository } from "src/core/domain/auth/users/user.repository";
 import { ENCRYPTION_SERVICE, EncryptionService } from "src/core/domain/auth/CryptService";
 import { AUTH_TOKEN_SERVICE } from "src/core/infrastructure/auth/services/jwt.service";
 import { AuthTokenService } from "src/core/domain/auth/AuthService";
-import { NonExistingUserError } from "src/core/domain/conversations/users/excepcions/NonExistingUser.error";
+import { NonExistingUserError } from "src/core/domain/auth/users/excepcions/NonExistingUser.error";
 import { LoginUserCommand } from "./login-user.command";
-import { BadInputForUser } from "src/core/domain/conversations/users/excepcions/InvalidUserInput.error";
+import { BadInputForUser } from "src/core/domain/auth/users/excepcions/InvalidUserInput.error";
 
 
 @Injectable()

@@ -1,7 +1,5 @@
-import { Message } from "src/core/domain/conversations/messages/message.entity";
-import { MessagesRepository } from "src/core/domain/conversations/messages/messages.repository";
-import { Id } from "src/core/domain/id";
-
+import { Message } from "../../domain/calendar-bot/messages/message.entity";
+import { MessagesRepository } from "../../domain/calendar-bot/messages/messages.repository";
 export class MessagesRepositoryInmemory implements MessagesRepository{
     readonly messages:Message[] = [];
     save(message: Message): void {

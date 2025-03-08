@@ -1,9 +1,9 @@
 import { Body, Controller, HttpStatus, Post, Req, Res, UseGuards } from "@nestjs/common";
 import { Response,Request } from "express";
 import { catchError } from "../../error-handler";
-import { RegisterMessageCommandHandler } from "src/core/application/conversations/messages/register-message.command-handler";
-import { RegisterMessageCommand } from "src/core/application/conversations/messages/register-message.command";
-import { JwtAuthGuard } from "../../auth/authguard";
+import { RegisterMessageCommandHandler } from "src/core/application/conversations/messages/register/register-message.command-handler";
+import { RegisterMessageCommand } from "src/core/application/conversations/messages/register/register-message.command";
+import { AuthGuard } from "../../auth/nest_authguard";
 
 
 class RegisterMessageDTO{
@@ -17,13 +17,14 @@ export class RegisterMessageController{
         private readonly registerMessageCommandHandler:RegisterMessageCommandHandler
     ){}
 
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(AuthGuard)
     @Post()
     handle(      
         @Req() request: Request,
         @Body() registerMessageDTO:RegisterMessageDTO,
         @Res() response:Response){
         try {
+            console.log(request['user'])
             this.registerMessageCommandHandler.handle(
                 new RegisterMessageCommand(registerMessageDTO.userId,registerMessageDTO.content)
             );

@@ -3,10 +3,12 @@ import { Response } from 'express'
 import { InvalidIdError } from '../../domain/invalid-id.error'
 import { HttpStatus } from '@nestjs/common'
 import { BaseError } from '../../domain/error'
-import { InvalidMessageLength } from 'src/core/domain/conversations/messages/excepcions/InvalidMessageLength.error'
-import { DuplicateMailError } from 'src/core/domain/conversations/users/excepcions/DuplicateEmailError.error'
-import { BadInputForUser } from 'src/core/domain/conversations/users/excepcions/InvalidUserInput.error'
-import { NonExistingUserError } from 'src/core/domain/conversations/users/excepcions/NonExistingUser.error'
+import { InvalidMessageLength } from 'src/core/domain/calendar-bot/messages/excepcions/InvalidMessageLength.error'
+import { DuplicateMailError } from 'src/core/domain/auth/users/excepcions/DuplicateEmailError.error'
+import { BadInputForUser } from 'src/core/domain/auth/users/excepcions/InvalidUserInput.error'
+import { NonExistingUserError } from 'src/core/domain/auth/users/excepcions/NonExistingUser.error'
+import { DeletionNotAuthorized } from 'src/core/domain/calendar-bot/tasks/excepcions/DeletionNotAuthorized'
+import { NonExistingTaskError } from 'src/core/domain/calendar-bot/tasks/excepcions/NonExistingTask.error'
 
 export class ErrorResponse {
   code: string
@@ -57,6 +59,16 @@ export const catchError = (error: Error, response: Response) => {
     response.status(HttpStatus.BAD_REQUEST).json(ErrorResponse.fromBaseError(error))
     return
   }
+
+  if (error instanceof DeletionNotAuthorized) {
+    response.status(HttpStatus.UNAUTHORIZED).json(ErrorResponse.fromBaseError(error))
+    return
+  }
+  if (error instanceof NonExistingTaskError) {
+    response.status(HttpStatus.NOT_FOUND).json(ErrorResponse.fromBaseError(error))
+    return
+  }
+  
  
   
 

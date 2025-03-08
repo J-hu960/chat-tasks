@@ -1,9 +1,11 @@
-import { Task } from "src/core/domain/conversations/tasks/task";
-import { TaskRepository } from "src/core/domain/conversations/tasks/tasks.repository";
-import { TaskDate } from "src/core/domain/conversations/tasks/value-objects/date";
+import { NotFoundException } from "@nestjs/common";
+import { NonExistingTaskError } from "src/core/domain/calendar-bot/tasks/excepcions/NonExistingTask.error";
+import { Task } from "src/core/domain/calendar-bot/tasks/task";
+import { TaskRepository } from "src/core/domain/calendar-bot/tasks/tasks.repository";
+import { TaskDate } from "src/core/domain/calendar-bot/tasks/value-objects/date";
 
 export class TaskRepositoryInmemory implements TaskRepository{
-    readonly tasks:Task[] = [];
+    private tasks:Task[] = [];
 
     save(task:Task){
         this.tasks.push(task);
@@ -30,6 +32,36 @@ export class TaskRepositoryInmemory implements TaskRepository{
         return tasks;
 
     }
+
+    delete(task_id: string): void {
+        console.log('deleting task w id = ',task_id)
+        const index = this.tasks.findIndex(task => task.id.value === task_id);
+    
+        if (index === -1) {
+            throw NonExistingTaskError.withId(task_id);
+        }
+    
+        this.tasks.splice(index, 1);
+    }
+
+    update(task: Task): void {
+        const index = this.tasks.findIndex(existingTask => existingTask.id.value === task.id.value);
+
+        if (index === -1) {
+            throw new NonExistingTaskError(task.id.value);
+        }
+
+        this.tasks[index] = task;
+    }
+
+    findById(task_id: string): Task {
+        const idx =  this.tasks.findIndex(task => task.id.value === task_id)
+
+        return this.tasks[idx]
+
+
+    }
+    
 
 
 }

@@ -1,7 +1,7 @@
 import { Body, Controller, HttpStatus, Post, Res } from "@nestjs/common";
 import { Response } from "express";
-import { RegisterUserCommand } from "src/core/application/auth/register-user.command";
-import { RegisterUserCommandHandler } from "src/core/application/auth/register-user.command-handler";
+import { RegisterUserCommand } from "src/core/application/auth/register-user/register-user.command";
+import { RegisterUserCommandHandler } from "src/core/application/auth/register-user/register-user.command-handler";
 import { catchError } from "../error-handler";
 
 class RegisterUserDTO{

@@ -1,8 +1,8 @@
 import { Body, Controller, HttpStatus, Post, Res } from "@nestjs/common";
 import { Response } from "express";
 import { catchError } from "../error-handler";
-import { LogInUserCommandHandler } from "src/core/application/auth/login-user.command-handler";
-import { LoginUserCommand } from "src/core/application/auth/login-user.command";
+import { LogInUserCommandHandler } from "src/core/application/auth/login/login-user.command-handler";
+import { LoginUserCommand } from "src/core/application/auth/login/login-user.command";
 
 class LoginUserDTO{
     constructor(

@@ -1,8 +1,8 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { TASK_REPOSITORY, TaskRepository } from "src/core/domain/conversations/tasks/tasks.repository";
+import { TASK_REPOSITORY, TaskRepository } from "src/core/domain/calendar-bot/tasks/tasks.repository";
 import { GetTasksQuery } from "./get-tasks.query";
-import { USER_REPOSITORY, UserRepository } from "src/core/domain/conversations/users/user.repository";
-import { NonExistingUserError } from "src/core/domain/conversations/users/excepcions/NonExistingUser.error";
+import { USER_REPOSITORY, UserRepository } from "src/core/domain/auth/users/user.repository";
+import { NonExistingUserError } from "src/core/domain/auth/users/excepcions/NonExistingUser.error";
 
 
 @Injectable()

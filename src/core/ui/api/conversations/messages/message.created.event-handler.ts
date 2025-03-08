@@ -1,9 +1,9 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { OnEvent } from "@nestjs/event-emitter";
-import { MessageCreatedEvent } from "src/core/domain/conversations/messages/message-created.event";
-import { LLMService, LLMSERVICE } from "src/core/domain/conversations/tasks/LLM-service";
-import { TASK_REPOSITORY, TaskRepository } from "src/core/domain/conversations/tasks/tasks.repository";
-import { UserId } from "src/core/domain/conversations/users/value-objects/id";
+import { MessageCreatedEvent } from "src/core/domain/calendar-bot/messages/message-created.event";
+import { LLMService, LLMSERVICE } from "src/core/domain/calendar-bot/tasks/LLM-service";
+import { TASK_REPOSITORY, TaskRepository } from "src/core/domain/calendar-bot/tasks/tasks.repository";
+import { UserId } from "src/core/domain/auth/users/value-objects/id";
 import { EventPublisher } from "src/core/domain/event-publisher";
 import { EVENTEMMITER_NEST } from "src/core/infrastructure/eventPublisher";
 

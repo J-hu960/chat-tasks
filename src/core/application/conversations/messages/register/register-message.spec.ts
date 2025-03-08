@@ -1,13 +1,12 @@
-import { MessagesRepository } from "../../../domain/conversations/messages/messages.repository"
 import { RegisterMessageCommandHandler } from "./register-message.command-handler"
-import { MessagesRepositoryInmemory } from "../../../infrastructure/in-memory/messages.repository"
-import { EventPublisher } from "../../../domain/event-publisher"
-import { EventEmmiterNest } from "../../../infrastructure/eventPublisher"
+import { MessagesRepositoryInmemory } from "../../../../infrastructure/in-memory/messages.repository"
+import { EventPublisher } from "../../../../domain/event-publisher"
+import { EventEmmiterNest } from "../../../../infrastructure/eventPublisher"
 import { EventEmitter2 } from "@nestjs/event-emitter"
 import { RegisterMessageCommand } from "./register-message.command"
-import { InvalidIdError } from "../../../domain/invalid-id.error"
-import { InvalidMessageLength } from "../../../domain/conversations/messages/excepcions/InvalidMessageLength.error"
-
+import { InvalidIdError } from "../../../../domain/invalid-id.error"
+import { InvalidMessageLength } from "../../../../domain/calendar-bot/messages/excepcions/InvalidMessageLength.error"
+import { MessagesRepository } from "../../../../domain/calendar-bot/messages/messages.repository"
 
 
 
@@ -67,51 +66,6 @@ describe('RegisterMessageCommandHandler', () => {
 
       
   })
-
-//   describe('When the hot desktop already exists', () => {
-//     const hotDesktop = HotDesktopEntity.create(10)
-
-//     beforeEach(() => {
-//       prepareScenario()
-
-//       repository.setHotDesktops([hotDesktop])
-//     })
-
-//     it('should throw an error', () => {
-//      const command = createCommandFromNumber(10)
-
-//       expect(() => handler.handle(command)).toThrow(HotdesktopAlreadyExistsError)
-//  })
-
-//     it('should not save the new hot', () => {
-//       const command = createCommandFromNumber(10)
-//       try {
-//         handler.handle(command)
-//       } catch (error) {
-//         expect(error).toBeDefined()
-//       }
-//     })
-//  })
-
-//  describe('When the hot desktop number is negative', () => {
-
-//     beforeEach(() => {
-//       prepareScenario()
-//     })
-
-//     it('should throw an error', () => {
-//      const command = createCommandFromNumber(-10)
-
-//       expect(() => handler.handle(command)).toThrow()
-//  })
-
-//     it('should not save the new hot', () => {
-//       const command = createCommandFromNumber(-10)
-      
-//       expect(()=>handler.handle(command)).toThrow(InvalidNumberError)
-
-//     })
- 
 
 })
 

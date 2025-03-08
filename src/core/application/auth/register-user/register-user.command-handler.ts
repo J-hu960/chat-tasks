@@ -1,9 +1,9 @@
-import { BadInputForUser } from "src/core/domain/conversations/users/excepcions/InvalidUserInput.error";
-import { USER_REPOSITORY, UserRepository } from "src/core/domain/conversations/users/user.repository";
+import { BadInputForUser } from "src/core/domain/auth/users/excepcions/InvalidUserInput.error";
+import { USER_REPOSITORY, UserRepository } from "src/core/domain/auth/users/user.repository";
 import { Inject, Injectable } from "@nestjs/common";
-import { NonExistingUserError } from "src/core/domain/conversations/users/excepcions/NonExistingUser.error";
+import { NonExistingUserError } from "src/core/domain/auth/users/excepcions/NonExistingUser.error";
 import { ENCRYPTION_SERVICE, EncryptionService } from "src/core/domain/auth/CryptService";
-import { User } from "src/core/domain/conversations/users/user.entity";
+import { User } from "src/core/domain/auth/users/user.entity";
 import { AUTH_TOKEN_SERVICE, AuthTokenService } from "src/core/infrastructure/auth/services/jwt.service";
 import { RegisterUserCommand } from "./register-user.command";
 

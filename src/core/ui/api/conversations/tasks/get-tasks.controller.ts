@@ -1,9 +1,9 @@
 import { Controller, Get, HttpStatus, Param, Query, Req, Res, UseGuards } from "@nestjs/common";
-import { Request, Response } from "express";
-import { GetTasksQuery } from "src/core/application/conversations/tasks/get-tasks.query";
-import { GetTasksQueryHandler } from "src/core/application/conversations/tasks/get-tasks.query-handler";
-import { JwtAuthGuard } from "../../auth/authguard";
-import { TaskDTO } from "src/core/domain/conversations/tasks/taskResponseDTO";
+import {  Request, Response } from "express";
+import { GetTasksQuery } from "src/core/application/conversations/tasks/get-tasks/get-tasks.query";
+import { GetTasksQueryHandler } from "src/core/application/conversations/tasks/get-tasks/get-tasks.query-handler";
+import { TaskDTO } from "src/core/domain/calendar-bot/tasks/taskResponseDTO";
+import { AuthGuard } from "../../auth/nest_authguard";
 
 @Controller('tasks')
 export class GetTasksController {
@@ -11,15 +11,16 @@ export class GetTasksController {
         private readonly getTasksQueryHandler: GetTasksQueryHandler
     ) {}
 
-    @UseGuards(JwtAuthGuard)
-    @Get('/:id/:start/:end')
+    @UseGuards(AuthGuard)
+    @Get('/:start/:end')
     handle(
-        @Param('id') userId: string,
+        @Req() req:Request,
         @Param('start') startDate: string,
         @Param('end') endDate: string,
         @Res() response: Response
     ) {
         try {
+            const userId = req['user'].sub
          
             const tasks = this.getTasksQueryHandler.handle(
                 new GetTasksQuery(userId, startDate, endDate)

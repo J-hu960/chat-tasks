@@ -1,6 +1,6 @@
-import { TaskRepository } from "src/core/domain/conversations/tasks/tasks.repository";
-import { User } from "src/core/domain/conversations/users/user.entity";
-import { UserRepository } from "src/core/domain/conversations/users/user.repository";
+import { TaskRepository } from "src/core/domain/calendar-bot/tasks/tasks.repository";
+import { User } from "src/core/domain/auth/users/user.entity";
+import { UserRepository } from "src/core/domain/auth/users/user.repository";
 
 export class UserRepositoryInmemory implements UserRepository{
     readonly users:User[] = [];

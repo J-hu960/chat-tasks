@@ -8,4 +8,7 @@ export class UserId extends Id{
       static new(): UserId {
         return new UserId(this.generate())
       }
+      static fromExisting(id: string): Id {
+          return new UserId(id)
+      }
 }
