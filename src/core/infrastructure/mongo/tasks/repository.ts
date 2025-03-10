@@ -69,7 +69,7 @@ export class MongoTaskRepository implements TaskRepository {
 
 
   async delete(task_id: string) {
-      this.taskModel.deleteOne({id:task_id});
+      await this.taskModel.deleteOne({id:task_id});
   }
 
   async findById(task_id: string): Promise<Task> {

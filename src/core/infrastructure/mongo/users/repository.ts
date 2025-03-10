@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { UserRepository } from 'src/core/domain/auth/users/user.repository';
 import { User } from 'src/core/domain/auth/users/user.entity';
 import { UserDocument, UserModel } from './schema';
+import { UserId } from 'src/core/domain/auth/users/value-objects/id';
 
 @Injectable()
 export class MongoUserRepository implements UserRepository {
@@ -21,6 +22,7 @@ export class MongoUserRepository implements UserRepository {
 
   async findByMail(email: string): Promise<User | undefined> {
     const userDoc = await this.userModel.findOne({ mail: email }).exec();
+    console.log(userDoc.id)
     if (!userDoc) return undefined;
 
     return this.toDomainUser(userDoc);
@@ -34,7 +36,8 @@ export class MongoUserRepository implements UserRepository {
   }
 
   private toDomainUser(userDoc: UserDocument): User {
-    const domainUser = User.create(userDoc.username,'',userDoc.mail,userDoc.id,userDoc.password)
+    const domainUser = User.create(userDoc.username,'',userDoc.mail,UserId.fromExisting(userDoc.id),userDoc.password)
+    console.log(domainUser.id)
    return domainUser
   }
 }

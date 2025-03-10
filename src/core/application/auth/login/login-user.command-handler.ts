@@ -18,6 +18,7 @@ export class LogInUserCommandHandler{
     }
     async handle(command:LoginUserCommand){
         const user = await this.userRepository.findByMail(command.mail);
+        console.log(user.id)
 
         if(!user){
             throw NonExistingUserError.withValue(command.mail);
@@ -28,8 +29,7 @@ export class LogInUserCommandHandler{
         }
 
         const jwt = await this.tokenService.generateToken(user.id.value);
-
-        return jwt;
+        return {jwt:jwt,user_id:user.id.value};
         
     }
 }

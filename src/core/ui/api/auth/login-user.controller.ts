@@ -23,10 +23,11 @@ export class LoginUserController{
    async handle(@Body() loginUserDTO:LoginUserDTO, @Res() response:Response){
         try {
 
-            const jwt = await this.logInUserCommanHandler.handle(
+            const {jwt,user_id} = await this.logInUserCommanHandler.handle(
                 new LoginUserCommand(loginUserDTO.mail,loginUserDTO.password)
             )
-            response.status(HttpStatus.CREATED).send({token:jwt});
+            console.log(`sending back token: ${jwt} and id: ${user_id}`)
+            response.status(HttpStatus.CREATED).send({token:jwt,id:user_id});
            
         } catch (error) {
             catchError(error,response)
