@@ -21,7 +21,7 @@ export class ReservationCreatedHandler {
       const task = await this.llmService.generateTask(event.payload.content,userId);
       this.taskRepository.save(task);
       this.eventPublisher.publish(task.releaseEvents());
-      console.log(this.taskRepository.getTasks())
+      // console.log(this.taskRepository.getTasks())
       
     }
   }

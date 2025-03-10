@@ -4,8 +4,8 @@ import { ENCRYPTION_SERVICE, EncryptionService } from "src/core/domain/auth/Cryp
 import { AUTH_TOKEN_SERVICE } from "src/core/infrastructure/auth/services/jwt.service";
 import { AuthTokenService } from "src/core/domain/auth/AuthService";
 import { NonExistingUserError } from "src/core/domain/auth/users/excepcions/NonExistingUser.error";
-import { LoginUserCommand } from "./login-user.command";
 import { BadInputForUser } from "src/core/domain/auth/users/excepcions/InvalidUserInput.error";
+import { LoginUserCommand } from "./login-user.command";
 
 
 @Injectable()
@@ -16,8 +16,8 @@ export class LogInUserCommandHandler{
          @Inject(AUTH_TOKEN_SERVICE) private readonly tokenService:AuthTokenService      
     ){
     }
-    handle(command:LoginUserCommand){
-        const user = this.userRepository.findByMail(command.mail);
+    async handle(command:LoginUserCommand){
+        const user = await this.userRepository.findByMail(command.mail);
 
         if(!user){
             throw NonExistingUserError.withValue(command.mail);
@@ -27,7 +27,7 @@ export class LogInUserCommandHandler{
             throw BadInputForUser.withValue(command.password);
         }
 
-        const jwt = this.tokenService.generateToken(user.id.value);
+        const jwt = await this.tokenService.generateToken(user.id.value);
 
         return jwt;
         

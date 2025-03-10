@@ -15,7 +15,7 @@ export class TaskRepositoryInmemory implements TaskRepository{
         return this.tasks
     }
 
-    getForUserAndDaterange(userId:string,date1:string,date2:string):Task[]{
+    async getForUserAndDaterange(userId:string,date1:string,date2:string):Promise<Task[]>{
         const date1Obj = TaskDate.create(date1)
         const date2Obj = TaskDate.create(date2)
         let tasks:Task[] = [];
@@ -54,7 +54,7 @@ export class TaskRepositoryInmemory implements TaskRepository{
         this.tasks[index] = task;
     }
 
-    findById(task_id: string): Task {
+    async findById(task_id: string): Promise<Task> {
         const idx =  this.tasks.findIndex(task => task.id.value === task_id)
 
         return this.tasks[idx]

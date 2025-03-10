@@ -10,8 +10,9 @@ export class UpdateTaskCommandHandler{
        @Inject(TASK_REPOSITORY) private readonly tasksRepository:TaskRepository
     ){}
 
-    handle(command:UpdateTaskCommand){
-        const task = this.tasksRepository.findById(command.task_id);
+   async  handle(command:UpdateTaskCommand){
+    console.log(`Command to update: ${command.task_id}`)
+        const task = await this.tasksRepository.findById(command.task_id);
         if(!task){
             throw NonExistingTaskError.withId(command.task_id);
         }

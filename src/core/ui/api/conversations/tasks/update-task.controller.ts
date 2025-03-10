@@ -16,6 +16,7 @@ export class UpdateTaskController{
     @UseGuards(AuthGuard)
     @Put()
     handle(@Req() request:Request,@Body() updateTaskCommand:UpdateTaskCommand, @Res() response:Response){
+        console.log(updateTaskCommand.task_id)
         try {
             this.updateTaskCommandHandler.handle(
                 updateTaskCommand

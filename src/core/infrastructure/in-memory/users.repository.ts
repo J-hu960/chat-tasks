@@ -9,7 +9,7 @@ export class UserRepositoryInmemory implements UserRepository{
         this.users.push(User);
     }
 
-    findByMail(mail:string): User | undefined {
+    async findByMail(mail:string): Promise<User> | undefined {
         for(let i = 0; i < this.users.length; i++){
             if(this.users[i].email.email===mail){
                 return this.users[i];
@@ -19,7 +19,7 @@ export class UserRepositoryInmemory implements UserRepository{
         return undefined
     }
 
-    findById(id: string): User | undefined {
+    async findById(id: string): Promise<User>| undefined {
         for(let i = 0; i < this.users.length; i++){
             if(this.users[i].id.value===id){
                 return this.users[i];

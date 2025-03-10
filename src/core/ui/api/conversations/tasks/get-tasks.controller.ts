@@ -13,7 +13,7 @@ export class GetTasksController {
 
     @UseGuards(AuthGuard)
     @Get('/:start/:end')
-    handle(
+    async handle(
         @Req() req:Request,
         @Param('start') startDate: string,
         @Param('end') endDate: string,
@@ -22,7 +22,7 @@ export class GetTasksController {
         try {
             const userId = req['user'].sub
          
-            const tasks = this.getTasksQueryHandler.handle(
+            const tasks = await this.getTasksQueryHandler.handle(
                 new GetTasksQuery(userId, startDate, endDate)
             );
             const tasksDTO = tasks.map(task => new TaskDTO(task));

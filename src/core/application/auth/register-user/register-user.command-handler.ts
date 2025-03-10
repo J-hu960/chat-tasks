@@ -1,7 +1,6 @@
 import { BadInputForUser } from "src/core/domain/auth/users/excepcions/InvalidUserInput.error";
 import { USER_REPOSITORY, UserRepository } from "src/core/domain/auth/users/user.repository";
 import { Inject, Injectable } from "@nestjs/common";
-import { NonExistingUserError } from "src/core/domain/auth/users/excepcions/NonExistingUser.error";
 import { ENCRYPTION_SERVICE, EncryptionService } from "src/core/domain/auth/CryptService";
 import { User } from "src/core/domain/auth/users/user.entity";
 import { AUTH_TOKEN_SERVICE, AuthTokenService } from "src/core/infrastructure/auth/services/jwt.service";
@@ -20,13 +19,13 @@ export class RegisterUserCommandHandler{
             throw BadInputForUser.withValue(command.password);
         }
 
-        let user:User|undefined = this.userRepository.findByMail(command.mail);
+        let user:User|undefined = await this.userRepository.findByMail(command.mail);
         
         if(user && user.id){
             throw BadInputForUser.withValue(command.mail);
         }
 
-        user = User.create(command.username,command.password,command.mail,"","");
+        user = User.create(command.username,command.password,command.mail);
 
         this.userRepository.save(user);
 

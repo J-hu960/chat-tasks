@@ -1,4 +1,5 @@
 import { BadInputForTask } from "../excepcions/BadInputForTask.error";
+import { TaskCreationEvent } from "../task-creation.error.event";
 
 export class TaskTitle{
     private constructor(readonly title:string){}

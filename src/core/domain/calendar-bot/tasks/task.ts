@@ -22,8 +22,8 @@ export class Task extends AggregateRoot{
     ){
         super()
     }
-    static create(userId:UserId,titleStr:string,descriptionstr:string, dateStr:string,durationMinutes:number,hourInt:number){
-        const id = TaskId.new();
+    static create(userId:UserId,titleStr:string,descriptionstr:string, dateStr:string,durationMinutes:number,hourInt:number,task_id?:TaskId){
+        const id = task_id || TaskId.new();
         const title = TaskTitle.create(titleStr);
         const description = TaskDescription.create(descriptionstr);
         const date = TaskDate.create(dateStr);
@@ -51,4 +51,5 @@ export class Task extends AggregateRoot{
         return new Task(id,user_id,title,description,date,duration,hour);
 
     }
+
 }

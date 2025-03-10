@@ -11,13 +11,11 @@ import { ReservationCreatedHandler } from './core/ui/api/conversations/messages/
 import { LLMSERVICE } from './core/domain/calendar-bot/tasks/LLM-service';
 import { OpenAIService } from './core/infrastructure/llm/openAi-service';
 import { TASK_REPOSITORY } from './core/domain/calendar-bot/tasks/tasks.repository';
-import { TaskRepositoryInmemory } from './core/infrastructure/in-memory/tasks.repository';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { RegisterUserController } from './core/ui/api/auth/register-user.controller';
 import { RegisterUserCommandHandler } from './core/application/auth/register-user/register-user.command-handler';
 import { USER_REPOSITORY } from './core/domain/auth/users/user.repository';
-import { UserRepositoryInmemory } from './core/infrastructure/in-memory/users.repository';
 import { ENCRYPTION_SERVICE } from './core/domain/auth/CryptService';
 import { AUTH_TOKEN_SERVICE, AuthTokenService } from './core/infrastructure/auth/services/jwt.service';
 import { BcryptService } from './core/infrastructure/auth/services/bycrypt';
@@ -33,13 +31,24 @@ import { DeleteTaskController } from './core/ui/api/conversations/tasks/delete-t
 import { DeleteTaskCommandHandler } from './core/application/conversations/tasks/delete/delete-task.command-handler';
 import { UpdateTaskController } from './core/ui/api/conversations/tasks/update-task.controller';
 import { UpdateTaskCommandHandler } from './core/application/conversations/tasks/update-task/update-task.command-handler';
-// import { TaskSseController } from './core/ui/api/conversations/tasks/task.created.controller';
+import { TasksController } from './core/ui/api/conversations/tasks/task-created.controller';
+import { MongoUserRepository } from './core/infrastructure/mongo/users/repository';
+import { MongoTaskRepository } from './core/infrastructure/mongo/tasks/repository';
+import { MongooseModule } from '@nestjs/mongoose';
+import { TaskModel, TaskSchema } from './core/infrastructure/mongo/tasks/schema';
+import { UserModel, UserSchema } from './core/infrastructure/mongo/users/schema';
 
 @Module({
-  imports: [EventEmitterModule.forRoot(),
-    ConfigModule.forRoot({
-      isGlobal: true, 
-    }),
+  imports: [ ConfigModule.forRoot({
+    isGlobal: true, 
+  }),
+    EventEmitterModule.forRoot(),
+     MongooseModule.forRoot(process.env.DATABASE_URL),
+     MongooseModule.forFeature([
+      { name: TaskModel.name, schema: TaskSchema },  
+      { name: UserModel.name, schema: UserSchema },  
+    ]),
+   
     PassportModule.register({ defaultStrategy: "jwt" }),
     JwtModule.register({
       secret: process.env.JWT_SECRET, 
@@ -48,15 +57,15 @@ import { UpdateTaskCommandHandler } from './core/application/conversations/tasks
     }),
   ],
   controllers: [AppController,RegisterMessageController,RegisterUserController,
-    LoginUserController,GetTasksController,VersionController,DeleteTaskController,UpdateTaskController],
+    LoginUserController,GetTasksController,VersionController,DeleteTaskController,UpdateTaskController,TasksController],
   providers: [AppService, RegisterMessageCommandHandler, DeleteTaskCommandHandler,
      ReservationCreatedHandler,RegisterUserCommandHandler, UpdateTaskCommandHandler,
     JwtStrategy,LogInUserCommandHandler,AuthGuard,GetTasksQueryHandler,
     {provide:MESSAGE_REPOSITORY,useClass:MessagesRepositoryInmemory},
     {provide:EVENTEMMITER_NEST,useClass:EventEmmiterNest},
     {provide:LLMSERVICE,useClass:OpenAIService},
-    {provide:TASK_REPOSITORY,useClass:TaskRepositoryInmemory},
-    {provide:USER_REPOSITORY,useClass:UserRepositoryInmemory},
+    {provide:TASK_REPOSITORY,useClass:MongoTaskRepository},
+    {provide:USER_REPOSITORY,useClass:MongoUserRepository},
     {provide:AUTH_TOKEN_SERVICE,useClass:AuthTokenService},
     {provide:ENCRYPTION_SERVICE,useClass:BcryptService}
 

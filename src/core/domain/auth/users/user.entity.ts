@@ -9,32 +9,28 @@ export class User{
     private readonly isActive:boolean;
    private constructor(
      readonly id:UserId,
-     private readonly username:Username,
+     readonly username:Username,
      readonly password:UserPassword,
      readonly email:UserMail,
-     readonly token:string,
-     readonly refresh_token:string
     
    ){
         this.id = id;
         this.username = username;
         this.password = password;
+        this.email = email;
         this.updated_at = new Date;
         this.created_at = new Date;
         this.isActive = true;
-        this.token = token;
-        this.refresh_token = refresh_token;
    }
 
-   static create(usernamestr:string,plainpassword:string,emailstr:string,token:string,refresh_token:string){
-        const id = UserId.new();
+   static create(usernamestr:string,plainpassword:string,emailstr:string,user_id?:UserId,hashed_pass?:string){
+        const id = user_id||UserId.new();
         const email = UserMail.create(emailstr)
         const username = Username.create(usernamestr);
-        const hashed_password = new UserPassword(plainpassword) //hashea internamente en la creación.
+        const hashed_password =hashed_pass ? UserPassword.fromExisting(hashed_pass) : UserPassword.create(plainpassword) //hashea internamente en la creación.
         
 
-        return new User(id,username,hashed_password,email,token,refresh_token);
+        return new User(id,username,hashed_password,email);
         
-
    }
 }

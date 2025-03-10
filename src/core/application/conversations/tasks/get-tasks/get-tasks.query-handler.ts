@@ -13,13 +13,14 @@ export class GetTasksQueryHandler{
     ){}
 
 
-    handle(query:GetTasksQuery){
-        const user = this.usersRepository.findById(query.userId)
+    async handle(query:GetTasksQuery){
+        const user = await this.usersRepository.findById(query.userId)
         if(!user){
             throw NonExistingUserError.withValue(query.userId);
         }
 
-        const tasks = this.tasksRepository.getForUserAndDaterange(query.userId,query.dateStart,query.dateEnd);
+        const tasks = await this.tasksRepository.getForUserAndDaterange(query.userId,query.dateStart,query.dateEnd);
+        console.log(`tasks found: ${tasks}`)
         return tasks;
     }
 }
