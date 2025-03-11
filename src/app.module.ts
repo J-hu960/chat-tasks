@@ -37,6 +37,8 @@ import { MongoTaskRepository } from './core/infrastructure/mongo/tasks/repositor
 import { MongooseModule } from '@nestjs/mongoose';
 import { TaskModel, TaskSchema } from './core/infrastructure/mongo/tasks/schema';
 import { UserModel, UserSchema } from './core/infrastructure/mongo/users/schema';
+import { TaskRepositoryInmemory } from './core/infrastructure/in-memory/tasks.repository';
+import { UserRepositoryInmemory } from './core/infrastructure/in-memory/users.repository';
 
 @Module({
   imports: [ ConfigModule.forRoot({
@@ -64,8 +66,8 @@ import { UserModel, UserSchema } from './core/infrastructure/mongo/users/schema'
     {provide:MESSAGE_REPOSITORY,useClass:MessagesRepositoryInmemory},
     {provide:EVENTEMMITER_NEST,useClass:EventEmmiterNest},
     {provide:LLMSERVICE,useClass:OpenAIService},
-    {provide:TASK_REPOSITORY,useClass:MongoTaskRepository},
-    {provide:USER_REPOSITORY,useClass:MongoUserRepository},
+    {provide:TASK_REPOSITORY,useClass:TaskRepositoryInmemory},
+    {provide:USER_REPOSITORY,useClass:UserRepositoryInmemory},
     {provide:AUTH_TOKEN_SERVICE,useClass:AuthTokenService},
     {provide:ENCRYPTION_SERVICE,useClass:BcryptService}
 
