@@ -45,11 +45,11 @@ import { UserRepositoryInmemory } from './core/infrastructure/in-memory/users.re
     isGlobal: true, 
   }),
     EventEmitterModule.forRoot(),
-     MongooseModule.forRoot(process.env.DATABASE_URL),
-     MongooseModule.forFeature([
-      { name: TaskModel.name, schema: TaskSchema },  
-      { name: UserModel.name, schema: UserSchema },  
-    ]),
+    //  MongooseModule.forRoot(process.env.DATABASE_URL),
+    //  MongooseModule.forFeature([
+    //   { name: TaskModel.name, schema: TaskSchema },  
+    //   { name: UserModel.name, schema: UserSchema },  
+    // ]),
    
     PassportModule.register({ defaultStrategy: "jwt" }),
     JwtModule.register({
