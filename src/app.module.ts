@@ -45,11 +45,11 @@ import { UserRepositoryInmemory } from './core/infrastructure/in-memory/users.re
     isGlobal: true, 
   }),
     EventEmitterModule.forRoot(),
-    //  MongooseModule.forRoot(process.env.DATABASE_URL),
-    //  MongooseModule.forFeature([
-    //   { name: TaskModel.name, schema: TaskSchema },  
-    //   { name: UserModel.name, schema: UserSchema },  
-    // ]),
+     MongooseModule.forRoot(process.env.DATABASE_URL),
+     MongooseModule.forFeature([
+      { name: TaskModel.name, schema: TaskSchema },  
+      { name: UserModel.name, schema: UserSchema },  
+    ]),
    
     PassportModule.register({ defaultStrategy: "jwt" }),
     JwtModule.register({
@@ -66,8 +66,8 @@ import { UserRepositoryInmemory } from './core/infrastructure/in-memory/users.re
     {provide:MESSAGE_REPOSITORY,useClass:MessagesRepositoryInmemory},
     {provide:EVENTEMMITER_NEST,useClass:EventEmmiterNest},
     {provide:LLMSERVICE,useClass:OpenAIService},
-    {provide:TASK_REPOSITORY,useClass:TaskRepositoryInmemory},
-    {provide:USER_REPOSITORY,useClass:UserRepositoryInmemory},
+    {provide:TASK_REPOSITORY,useClass:MongoTaskRepository},
+    {provide:USER_REPOSITORY,useClass:MongoUserRepository},
     {provide:AUTH_TOKEN_SERVICE,useClass:AuthTokenService},
     {provide:ENCRYPTION_SERVICE,useClass:BcryptService}
 
