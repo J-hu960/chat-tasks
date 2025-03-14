@@ -5,8 +5,8 @@ export class UserPassword{
          readonly hashed:string,
     ){}
 
-   static  create(plain:string){
-        const hashed = plain //TODO: HASH HEREEEE
+   static  create(hashed:string){
+       
         return new UserPassword(hashed);
     }
     static fromExisting(hashed:string){

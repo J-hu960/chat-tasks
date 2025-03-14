@@ -21,10 +21,11 @@ export class MongoUserRepository implements UserRepository {
   }
 
   async findByMail(email: string): Promise<User | undefined> {
+    console.log(`Looking for user with email = ${email}`)
     const userDoc = await this.userModel.findOne({ mail: email }).exec();
-    console.log(userDoc.id)
-    if (!userDoc) return undefined;
-
+    if (!userDoc){
+       return undefined;
+      }
     return this.toDomainUser(userDoc);
   }
 
@@ -36,7 +37,7 @@ export class MongoUserRepository implements UserRepository {
   }
 
   private toDomainUser(userDoc: UserDocument): User {
-    const domainUser = User.create(userDoc.username,'',userDoc.mail,UserId.fromExisting(userDoc.id),userDoc.password)
+    const domainUser = User.fromMongoDoc(UserId.fromExisting(userDoc.id),userDoc.password,userDoc.username,userDoc.mail);
     console.log(domainUser.id)
    return domainUser
   }

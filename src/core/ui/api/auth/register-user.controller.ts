@@ -22,13 +22,13 @@ export class RegisterUserController{
     @Post('sign-up')
    async handle(@Body() registerUserDTO:RegisterUserDTO, @Res() response:Response){
         try {
+            console.log(registerUserDTO)
             const result = await this.registerUserCommandHandler.handle(
                 new RegisterUserCommand(
                     registerUserDTO.username,registerUserDTO.mail,
                     registerUserDTO.password,registerUserDTO.repeatedPassword
                 )
             )
-            await result.jwt
 
             response.status(HttpStatus.CREATED).send({
                 token:result.jwt,
@@ -36,6 +36,7 @@ export class RegisterUserController{
             });
             
         } catch (error) {
+            console.log(error)
             catchError(error,response)
             return
             

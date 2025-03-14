@@ -73,12 +73,18 @@ export class MongoTaskRepository implements TaskRepository {
   }
 
   async findById(task_id: string): Promise<Task> {
-    console.log(`mongo lookinf for id:${task_id}`)
+    try {
+      console.log(`mongo lookinf for id:${task_id}`)
       const mongoTask = await this.taskModel.findOne({id:task_id})
       console.log(`task to edit: ${mongoTask}`)
       const domainTask = this.mapToDomainTask(mongoTask);
 
-     return domainTask;
+      return domainTask;
+      
+    } catch (error) {
+      console.log(error)
+    }
+   
   }
 
   async update(task: Task): Promise<void> {

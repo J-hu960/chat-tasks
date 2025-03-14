@@ -39,6 +39,8 @@ import { TaskModel, TaskSchema } from './core/infrastructure/mongo/tasks/schema'
 import { UserModel, UserSchema } from './core/infrastructure/mongo/users/schema';
 import { TaskRepositoryInmemory } from './core/infrastructure/in-memory/tasks.repository';
 import { UserRepositoryInmemory } from './core/infrastructure/in-memory/users.repository';
+import { LoggerService } from './core/infrastructure/logger/nest-logger';
+import { LOGGER_SYMBOL } from './core/domain/logger.interface';
 
 @Module({
   imports: [ ConfigModule.forRoot({
@@ -69,7 +71,8 @@ import { UserRepositoryInmemory } from './core/infrastructure/in-memory/users.re
     {provide:TASK_REPOSITORY,useClass:MongoTaskRepository},
     {provide:USER_REPOSITORY,useClass:MongoUserRepository},
     {provide:AUTH_TOKEN_SERVICE,useClass:AuthTokenService},
-    {provide:ENCRYPTION_SERVICE,useClass:BcryptService}
+    {provide:ENCRYPTION_SERVICE,useClass:BcryptService},
+    {provide:LOGGER_SYMBOL,useClass:LoggerService},
 
   ],
 })

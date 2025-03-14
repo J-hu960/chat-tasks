@@ -24,8 +24,9 @@ export class RegisterUserCommandHandler{
         if(user && user.id){
             throw BadInputForUser.withValue(command.mail);
         }
+        const hashed_password = await this.encryptionService.hash(command.password);
 
-        user = User.create(command.username,command.password,command.mail);
+        user = User.create(command.username,hashed_password,command.mail);
 
         this.userRepository.save(user);
 

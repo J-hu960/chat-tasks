@@ -6,6 +6,7 @@ import { AuthTokenService } from "src/core/domain/auth/AuthService";
 import { NonExistingUserError } from "src/core/domain/auth/users/excepcions/NonExistingUser.error";
 import { BadInputForUser } from "src/core/domain/auth/users/excepcions/InvalidUserInput.error";
 import { LoginUserCommand } from "./login-user.command";
+import { Logger, LOGGER_SYMBOL } from "src/core/domain/logger.interface";
 
 
 @Injectable()
@@ -13,18 +14,18 @@ export class LogInUserCommandHandler{
     constructor(
          @Inject(USER_REPOSITORY) private readonly userRepository:UserRepository,
          @Inject(ENCRYPTION_SERVICE) private readonly encryptionService:EncryptionService,
-         @Inject(AUTH_TOKEN_SERVICE) private readonly tokenService:AuthTokenService      
+         @Inject(AUTH_TOKEN_SERVICE) private readonly tokenService:AuthTokenService     ,
+         @Inject(LOGGER_SYMBOL) private readonly logger:Logger 
     ){
     }
     async handle(command:LoginUserCommand){
         const user = await this.userRepository.findByMail(command.mail);
-        console.log(user.id)
-
+        this.logger.debug(`La contraseña guardada es: ${user.password.hashed}`)
         if(!user){
             throw NonExistingUserError.withValue(command.mail);
         }
 
-        if(!this.encryptionService.compare(command.password,user.password.hashed)){
+        if(!(await this.encryptionService.compare(command.password,user.password.hashed))){
             throw BadInputForUser.withValue(command.password);
         }
 

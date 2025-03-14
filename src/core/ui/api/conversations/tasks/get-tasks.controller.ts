@@ -4,6 +4,7 @@ import { GetTasksQuery } from "src/core/application/conversations/tasks/get-task
 import { GetTasksQueryHandler } from "src/core/application/conversations/tasks/get-tasks/get-tasks.query-handler";
 import { TaskDTO } from "src/core/domain/calendar-bot/tasks/taskResponseDTO";
 import { AuthGuard } from "../../auth/nest_authguard";
+import { catchError } from "../../error-handler";
 
 @Controller('tasks')
 export class GetTasksController {
@@ -30,6 +31,7 @@ export class GetTasksController {
              console.log(`tasks for user: ${userId} `)
             response.status(HttpStatus.OK).send({ tasks:tasksDTO });
         } catch (error) {
+            catchError(error,response)
             response.status(400).send();
         }
     }
