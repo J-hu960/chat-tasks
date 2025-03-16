@@ -10,14 +10,12 @@ export class OpenAIService implements LLMService {
   constructor() {}
 
   async generateTask(message: string, userId:UserId): Promise<Task> {
-    // Initialize the OpenAI chat model
     const llm = new ChatOpenAI({ 
       modelName: "gpt-4", 
       temperature: 0, 
       apiKey: process.env.OPENAI_API_KEY 
     });
 
-    // Define the task schema using zod for validation
     const taskSchema = z.object({
       title: z.string().max(100),
       description: z.string().max(500),
@@ -27,12 +25,9 @@ export class OpenAIService implements LLMService {
 
     });
 
-    // Use StructuredOutputParser to format output
-    const parser = StructuredOutputParser.fromZodSchema(taskSchema);
-    const formatInstructions = parser.getFormatInstructions();
+    
     const today = new Date().toISOString().split("T")[0];
 
-    // Create a more specific prompt template with examples
     const prompt = `
     Extract a task from the following message. The task must contain the following fields:
     - title: A very very short title (max 100 characters)
@@ -58,7 +53,6 @@ export class OpenAIService implements LLMService {
     Very important, take into account that today is ${today}
     `;
 
-    // Now invoke the model with the prompt and get structured output
     const llm_w_structuredOutput = llm.withStructuredOutput(taskSchema);
     const response = await llm_w_structuredOutput.invoke(prompt);
 

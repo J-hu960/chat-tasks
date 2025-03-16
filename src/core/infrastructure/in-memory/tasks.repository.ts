@@ -1,8 +1,7 @@
-import { NotFoundException } from "@nestjs/common";
-import { NonExistingTaskError } from "src/core/domain/calendar-bot/tasks/excepcions/NonExistingTask.error";
-import { Task } from "src/core/domain/calendar-bot/tasks/task";
-import { TaskRepository } from "src/core/domain/calendar-bot/tasks/tasks.repository";
-import { TaskDate } from "src/core/domain/calendar-bot/tasks/value-objects/date";
+import { NonExistingTaskError } from "../../domain/calendar-bot/tasks/excepcions/NonExistingTask.error";
+import { Task } from "../../domain/calendar-bot/tasks/task";
+import { TaskRepository } from "../../domain/calendar-bot/tasks/tasks.repository";
+import { TaskDate } from "../../domain/calendar-bot/tasks/value-objects/date";
 
 export class TaskRepositoryInmemory implements TaskRepository{
     private tasks:Task[] = [];

@@ -1,6 +1,6 @@
-import { TASK_REPOSITORY, TaskRepository } from "src/core/domain/calendar-bot/tasks/tasks.repository";
+import { TASK_REPOSITORY, TaskRepository } from "../../../../domain/calendar-bot/tasks/tasks.repository";
 import { DeleteTaskCommand } from "./delete-task.command";
-import { DeletionNotAuthorized } from "src/core/domain/calendar-bot/tasks/excepcions/DeletionNotAuthorized";
+import { DeletionNotAuthorized } from "../../../../domain/calendar-bot/tasks/excepcions/DeletionNotAuthorized";
 import { Inject, Injectable } from "@nestjs/common";
 
 @Injectable()

@@ -1,11 +1,11 @@
 import { Body, Controller, Delete, HttpStatus, Put, Req, Res, UseGuards } from "@nestjs/common";
 import { Request, Response } from "express";
-import { DeleteTaskCommand } from "src/core/application/conversations/tasks/delete/delete-task.command";
-import { DeleteTaskCommandHandler } from "src/core/application/conversations/tasks/delete/delete-task.command-handler";
+import { DeleteTaskCommand } from "src/core/application/calendar-bot/tasks/delete/delete-task.command";
+import { DeleteTaskCommandHandler } from "src/core/application/calendar-bot/tasks/delete/delete-task.command-handler";
 import { catchError } from "../../error-handler";
 import { AuthGuard } from "../../auth/nest_authguard";
-import { UpdateTaskCommandHandler } from "src/core/application/conversations/tasks/update-task/update-task.command-handler";
-import { UpdateTaskCommand } from "src/core/application/conversations/tasks/update-task/update-task.command";
+import { UpdateTaskCommandHandler } from "src/core/application/calendar-bot/tasks/update-task/update-task.command-handler";
+import { UpdateTaskCommand } from "src/core/application/calendar-bot/tasks/update-task/update-task.command";
 
 @Controller('tasks_update')
 export class UpdateTaskController{

@@ -1,7 +1,7 @@
 import { Controller, Get, HttpStatus, Param, Query, Req, Res, UseGuards } from "@nestjs/common";
 import {  Request, Response } from "express";
-import { GetTasksQuery } from "src/core/application/conversations/tasks/get-tasks/get-tasks.query";
-import { GetTasksQueryHandler } from "src/core/application/conversations/tasks/get-tasks/get-tasks.query-handler";
+import { GetTasksQuery } from "src/core/application/calendar-bot/tasks/get-tasks/get-tasks.query";
+import { GetTasksQueryHandler } from "src/core/application/calendar-bot/tasks/get-tasks/get-tasks.query-handler";
 import { TaskDTO } from "src/core/domain/calendar-bot/tasks/taskResponseDTO";
 import { AuthGuard } from "../../auth/nest_authguard";
 import { catchError } from "../../error-handler";

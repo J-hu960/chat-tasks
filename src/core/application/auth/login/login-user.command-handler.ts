@@ -1,4 +1,4 @@
-import { Inject, Injectable } from "@nestjs/common";
+import { HttpCode, HttpStatus, Inject, Injectable } from "@nestjs/common";
 import { USER_REPOSITORY, UserRepository } from "src/core/domain/auth/users/user.repository";
 import { ENCRYPTION_SERVICE, EncryptionService } from "src/core/domain/auth/CryptService";
 import { AUTH_TOKEN_SERVICE } from "src/core/infrastructure/auth/services/jwt.service";
@@ -20,7 +20,6 @@ export class LogInUserCommandHandler{
     }
     async handle(command:LoginUserCommand){
         const user = await this.userRepository.findByMail(command.mail);
-        this.logger.debug(`La contraseña guardada es: ${user.password.hashed}`)
         if(!user){
             throw NonExistingUserError.withValue(command.mail);
         }

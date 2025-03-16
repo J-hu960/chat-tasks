@@ -1,8 +1,8 @@
 import { Body, Controller, HttpStatus, Post, Req, Res, UseGuards } from "@nestjs/common";
 import { Response,Request } from "express";
 import { catchError } from "../../error-handler";
-import { RegisterMessageCommandHandler } from "src/core/application/conversations/messages/register/register-message.command-handler";
-import { RegisterMessageCommand } from "src/core/application/conversations/messages/register/register-message.command";
+import { RegisterMessageCommandHandler } from "src/core/application/calendar-bot/messages/register/register-message.command-handler";
+import { RegisterMessageCommand } from "src/core/application/calendar-bot/messages/register/register-message.command";
 import { AuthGuard } from "../../auth/nest_authguard";
 
 

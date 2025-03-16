@@ -8,7 +8,7 @@ import { TaskDuration } from "./value-objects/duration";
 import { TaskHour } from "./value-objects/hour";
 import { TaskId } from "./value-objects/id";
 import { TaskTitle } from "./value-objects/title";
-import { UpdateTaskCommand } from "src/core/application/conversations/tasks/update-task/update-task.command";
+import { UpdateTaskCommand } from "src/core/application/calendar-bot/tasks/update-task/update-task.command";
 
 export class Task extends AggregateRoot{
     private constructor(

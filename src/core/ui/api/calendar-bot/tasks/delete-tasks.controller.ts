@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, HttpStatus, Req, Res, UseGuards } from "@nestjs/common";
 import { Request, Response } from "express";
-import { DeleteTaskCommand } from "src/core/application/conversations/tasks/delete/delete-task.command";
-import { DeleteTaskCommandHandler } from "src/core/application/conversations/tasks/delete/delete-task.command-handler";
+import { DeleteTaskCommand } from "src/core/application/calendar-bot/tasks/delete/delete-task.command";
+import { DeleteTaskCommandHandler } from "src/core/application/calendar-bot/tasks/delete/delete-task.command-handler";
 import { catchError } from "../../error-handler";
 import { AuthGuard } from "../../auth/nest_authguard";
 
@@ -18,13 +18,13 @@ export class DeleteTaskController{
             console.log(deleteTaskCommand.task_id)
             this.deleteTaskCommandHandler.handle(
                 deleteTaskCommand, request['user'].sub
-            )
+            );
 
-            response.status(HttpStatus.ACCEPTED).send({message:'Task deleted successfully'})
+            response.status(HttpStatus.ACCEPTED).send({message:'Task deleted successfully'});
             
         } catch (error) {
             console.log(error)
-            catchError(error,response)
+            catchError(error,response);
             return  
         }
     }

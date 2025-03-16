@@ -1,4 +1,4 @@
-import { BaseError } from "src/core/domain/error";
+import { BaseError } from "../../../../domain/error";
 
 
 export class NonExistingTaskError extends BaseError{
