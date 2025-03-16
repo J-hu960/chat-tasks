@@ -24,7 +24,7 @@ export class RegisterPartyController{
         @Body() registerPartyDTO:RegisterPartyDTO,
         @Res() response:Response){
         try {
-            const created_by = (request['user'])
+            const created_by = (request['user'].sub)
             const party = await this.registerpartyCommandHandler.handle(
                 new RegisterPartyCommand(registerPartyDTO.name,created_by,registerPartyDTO.code)
             );

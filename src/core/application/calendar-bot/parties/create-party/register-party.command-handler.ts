@@ -28,7 +28,7 @@ export class  RegisterPartyCommanHandler{
 
         const party = Party.create(command.name, command.code,created_by,[created_by]);
 
-        this.partyRepository.save(party)
+        await this.partyRepository.save(party)
 
          
         return party;

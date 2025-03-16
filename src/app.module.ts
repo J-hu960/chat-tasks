@@ -48,6 +48,7 @@ import { PARTY_REPOSITORY } from './core/domain/calendar-bot/parties/party.repos
 import { PartyRepositoryInMemory } from './core/infrastructure/in-memory/parties.repo';
 import { JoinPartyController } from './core/ui/api/calendar-bot/parties/join-party.controller';
 import { JoinPartyCommandHandler } from './core/application/calendar-bot/parties/join-party/join-party.command-handler';
+import { PartyMongoRepository } from './core/infrastructure/mongo/parties/repository';
 
 @Module({
   imports: [ ConfigModule.forRoot({
@@ -77,12 +78,12 @@ import { JoinPartyCommandHandler } from './core/application/calendar-bot/parties
     {provide:MESSAGE_REPOSITORY,useClass:MessagesRepositoryInmemory},
     {provide:EVENTEMMITER_NEST,useClass:EventEmmiterNest},
     {provide:LLMSERVICE,useClass:OpenAIService},
-    {provide:TASK_REPOSITORY,useClass:TaskRepositoryInmemory},
-    {provide:USER_REPOSITORY,useClass:UserRepositoryInmemory},
+    {provide:TASK_REPOSITORY,useClass:MongoTaskRepository},
+    {provide:USER_REPOSITORY,useClass:MongoUserRepository},
     {provide:AUTH_TOKEN_SERVICE,useClass:AuthTokenService},
     {provide:ENCRYPTION_SERVICE,useClass:BcryptService},
     {provide:LOGGER_SYMBOL,useClass:LoggerService},
-    {provide:PARTY_REPOSITORY,useClass:PartyRepositoryInMemory},
+    {provide:PARTY_REPOSITORY,useClass:PartyMongoRepository},
     RegisterPartyCommanHandler,
     JoinPartyCommandHandler
 

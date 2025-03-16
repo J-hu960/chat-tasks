@@ -28,6 +28,7 @@ export class PartyMongoRepository implements PartyRepository{
             created_by:party.created_by.value,
             users_ids:party.users_id,
             created_at:party.created_at,
+            code:party.code.code,
             last_modified:party.created_at
         })
 

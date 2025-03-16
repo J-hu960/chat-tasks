@@ -5,7 +5,6 @@ import { DeleteTaskCommandHandler } from "./delete-task.command-handler"
 import { TaskRepository } from "../../../../domain/calendar-bot/tasks/tasks.repository"
 import { TaskRepositoryInmemory } from "../../../../infrastructure/in-memory/tasks.repository"
 import { DeleteTaskCommand } from "./delete-task.command"
-import { NonExistingTaskError } from "../../../../domain/calendar-bot/tasks/excepcions/NonExistingTask.error"
 
 
 
