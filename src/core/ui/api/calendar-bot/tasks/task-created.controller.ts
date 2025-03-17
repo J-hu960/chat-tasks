@@ -1,6 +1,7 @@
 import { Controller, Inject, Sse, Query, OnModuleDestroy, OnModuleInit, MessageEvent } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { Observable, Subject } from 'rxjs';
+import { PARTY_REPOSITORY, PartyRepository } from 'src/core/domain/calendar-bot/parties/party.repository';
 import { Task } from 'src/core/domain/calendar-bot/tasks/task';
 import { TaskCreatedEvent, TaskCreatedPayload } from 'src/core/domain/calendar-bot/tasks/task-created.event';
 import { EVENTEMMITER_NEST, EventEmmiterNest } from 'src/core/infrastructure/eventPublisher';
@@ -10,7 +11,8 @@ export class TasksController implements OnModuleInit, OnModuleDestroy {
   private clients = new Map<string, Subject<MessageEvent>>(); // 🔴 Guarda los clientes conectados
 
   constructor(
-    @Inject(EVENTEMMITER_NEST) private readonly eventEmmitter: EventEmmiterNest
+    @Inject(EVENTEMMITER_NEST) private readonly eventEmmitter: EventEmmiterNest,
+    @Inject(PARTY_REPOSITORY) private readonly partyRepository:PartyRepository
   ) {}
 
   // 🔵 SSE: Cliente se conecta y envía su `userId`
@@ -39,18 +41,23 @@ export class TasksController implements OnModuleInit, OnModuleDestroy {
 
   // 🔴 Evento: Se emite cuando se crea una nueva tarea
   @OnEvent(TaskCreatedEvent.Type)
-  handleNewTask(task: TaskCreatedEvent): void {
+  async handleNewTask(task: TaskCreatedEvent): Promise<void> {
     console.log("🚀 Nueva tarea recibida:", task);
 
     const userId = task.payload.user_id; 
 
-    const clientStream = this.clients.get(userId);
-    if (clientStream) {
-      console.log(`📩 Enviando tarea al cliente ${userId}`);
-      clientStream.next({ data: task });
-    } else {
-      console.log(`⚠️ Cliente ${userId} no está conectado`);
-    }
+    if(task.payload.party_id){
+      const users_ids = await this.partyRepository.getUsersFromParty(task.payload.party_id)
+      for(let i = 0; i < users_ids.length ; i++){
+        const clientStream = this.clients.get(userId);
+        if (clientStream) {
+          console.log(`📩 Enviando tarea al cliente ${userId}`);
+          clientStream.next({ data: task });
+         } else {
+            console.log(`⚠️ Cliente ${userId} no está conectado`);
+         }
+        }
+     }
   }
 
   onModuleDestroy() {

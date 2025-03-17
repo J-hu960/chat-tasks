@@ -9,7 +9,7 @@ import { EVENTEMMITER_NEST } from "src/core/infrastructure/eventPublisher";
 import { PARTY_REPOSITORY, PartyRepository } from "src/core/domain/calendar-bot/parties/party.repository";
 
 @Injectable()
-export class ReservationCreatedHandler {
+export class MessageCreatedEventHandler {
     constructor(
       @Inject(LLMSERVICE) private readonly llmService:LLMService,
       @Inject(TASK_REPOSITORY) private readonly taskRepository :TaskRepository,

@@ -7,7 +7,7 @@ import { MESSAGE_REPOSITORY } from './core/domain/calendar-bot/messages/messages
 import { MessagesRepositoryInmemory } from './core/infrastructure/in-memory/messages.repository';
 import { EVENTEMMITER_NEST, EventEmmiterNest } from './core/infrastructure/eventPublisher';
 import { EventEmitterModule } from '@nestjs/event-emitter';
-import { ReservationCreatedHandler } from './core/ui/api/calendar-bot/messages/message.created.event-handler';
+import { MessageCreatedEventHandler } from './core/ui/api/calendar-bot/messages/message.created.event-handler';
 import { LLMSERVICE } from './core/domain/calendar-bot/tasks/LLM-service';
 import { OpenAIService } from './core/infrastructure/llm/openAi-service';
 import { TASK_REPOSITORY } from './core/domain/calendar-bot/tasks/tasks.repository';
@@ -75,7 +75,7 @@ import { RetrieveUserPartiesController } from './core/ui/api/calendar-bot/partie
     LoginUserController,GetTasksController,VersionController,DeleteTaskController,UpdateTaskController,
     TasksController,RegisterPartyController, JoinPartyController,RetrieveUserPartiesController],
   providers: [AppService, RegisterMessageCommandHandler, DeleteTaskCommandHandler,
-     ReservationCreatedHandler,RegisterUserCommandHandler, UpdateTaskCommandHandler,
+    MessageCreatedEventHandler,RegisterUserCommandHandler, UpdateTaskCommandHandler,
     JwtStrategy,LogInUserCommandHandler,AuthGuard,GetTasksQueryHandler,
     {provide:MESSAGE_REPOSITORY,useClass:MessagesRepositoryInmemory},
     {provide:EVENTEMMITER_NEST,useClass:EventEmmiterNest},

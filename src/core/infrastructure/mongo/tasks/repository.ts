@@ -23,8 +23,8 @@ export class MongoTaskRepository implements TaskRepository {
       mongoTask.date,
       mongoTask.duration,
       mongoTask.hour,
+      PartyId.fromExisting(mongoTask.party_id),
       TaskId.fromExisting(mongoTask.id),
-     PartyId.fromExisting(mongoTask.party_id)
     );
   }
   
@@ -76,9 +76,22 @@ export class MongoTaskRepository implements TaskRepository {
 }
 
 
-  async delete(task_id: string) {
-      await this.taskModel.deleteOne({id:task_id});
+async delete(task_id: string): Promise<void> {
+  console.log(`eliminando la task con id: ${task_id}`);
+
+  // Verifica que la tarea exista antes de intentar eliminarla
+  const taskExists = await this.taskModel.exists({ id: task_id });
+  if (!taskExists) {
+    console.log(`No se encontró la tarea con id: ${task_id}`);
+    return;
   }
+
+  const result = await this.taskModel.deleteOne({ id: task_id });
+  console.log(`Resultado de eliminación: ${result.deletedCount}`);
+}
+
+
+ 
 
   async findById(task_id: string): Promise<Task> {
     try {

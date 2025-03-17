@@ -17,7 +17,7 @@ export class DeleteTaskController{
         try {
             console.log(deleteTaskCommand.task_id)
             await this.deleteTaskCommandHandler.handle(
-                deleteTaskCommand, request['user'].sub
+                deleteTaskCommand
             );
 
             response.status(HttpStatus.ACCEPTED).send({message:'Task deleted successfully'});

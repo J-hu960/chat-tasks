@@ -5,7 +5,7 @@ import { string } from 'zod';
 
 export type PartyDocument = HydratedDocument<PartyModel>;
 
-@Schema({collection:'users'})
+@Schema({collection:'parties'})
 export class PartyModel {
   @Prop({required:true})
   id: string;

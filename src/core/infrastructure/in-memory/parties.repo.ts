@@ -54,6 +54,10 @@ export class PartyRepositoryInMemory implements PartyRepository{
         return parties;
     }
 
+    async getUsersFromParty(party_id: any): Promise<string[]> {
+        return []
+    }
+
     
 
 

@@ -69,6 +69,11 @@ export class PartyMongoRepository implements PartyRepository{
 
     }
 
+    async getUsersFromParty(party_id: any): Promise<string[]> {
+      const party = await  this.partyModel.findOne({id:party_id }).exec();
+      return party.users_ids;
+    }
+
 
         
 }

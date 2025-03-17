@@ -10,7 +10,8 @@ export type TaskCreatedPayload = {
     title:string,
     description:string,
     date:string,
-    duration:number
+    duration:number,
+    party_id?:string
 }
 
 export class TaskCreatedEvent extends DomainEvent<TaskCreatedPayload>{
@@ -26,7 +27,8 @@ export class TaskCreatedEvent extends DomainEvent<TaskCreatedPayload>{
             title:task.title.title,
             description:task.description.Description,
             date:task.date.getISODate(),
-            duration:task.duration.toMinutes()
+            duration:task.duration.toMinutes(),
+            party_id:task.party_id.value
         }
 
         )
