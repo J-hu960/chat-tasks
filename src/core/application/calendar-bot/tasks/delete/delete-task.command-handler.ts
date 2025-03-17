@@ -9,13 +9,13 @@ export class DeleteTaskCommandHandler{
         @Inject(TASK_REPOSITORY) private readonly tasksRepository:TaskRepository
     ){}
 
-    handle(command:DeleteTaskCommand,token_id:string){
+   async  handle(command:DeleteTaskCommand,token_id:string){
         console.log(token_id,command.user_id)
         if(command.user_id != token_id){
             throw DeletionNotAuthorized.create()
         }
 
-        this.tasksRepository.delete(command.task_id)
+         this.tasksRepository.delete(command.task_id)
 
     }
 }

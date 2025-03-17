@@ -13,10 +13,10 @@ export class DeleteTaskController{
     
     @UseGuards(AuthGuard)
     @Delete()
-    handle(@Req() request:Request,@Body() deleteTaskCommand:DeleteTaskCommand, @Res() response:Response){
+   async handle(@Req() request:Request,@Body() deleteTaskCommand:DeleteTaskCommand, @Res() response:Response){
         try {
             console.log(deleteTaskCommand.task_id)
-            this.deleteTaskCommandHandler.handle(
+            await this.deleteTaskCommandHandler.handle(
                 deleteTaskCommand, request['user'].sub
             );
 

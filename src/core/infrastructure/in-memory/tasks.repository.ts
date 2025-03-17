@@ -14,7 +14,7 @@ export class TaskRepositoryInmemory implements TaskRepository{
         return this.tasks
     }
 
-    async getForUserAndDaterange(userId:string,date1:string,date2:string):Promise<Task[]>{
+    async getForUserAndDaterange(userId:string,userParties:string[],date1:string,date2:string):Promise<Task[]>{
         const date1Obj = TaskDate.create(date1)
         const date2Obj = TaskDate.create(date2)
         let tasks:Task[] = [];

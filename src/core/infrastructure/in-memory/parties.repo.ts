@@ -43,6 +43,17 @@ export class PartyRepositoryInMemory implements PartyRepository{
         
     }
 
+    async getAllPartiesForUser(user_id: string): Promise<Party[]> {
+        const parties:Party[] = [];
+        for(let i = 0; i < this.parties.length; i++){
+            if(this.parties[i].created_by.value === user_id || this.parties[i].users_id.includes(UserId.fromExisting(user_id)) ){
+                parties.push(this.parties[i])
+            };
+        };
+
+        return parties;
+    }
+
     
 
 

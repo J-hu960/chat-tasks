@@ -49,6 +49,8 @@ import { PartyRepositoryInMemory } from './core/infrastructure/in-memory/parties
 import { JoinPartyController } from './core/ui/api/calendar-bot/parties/join-party.controller';
 import { JoinPartyCommandHandler } from './core/application/calendar-bot/parties/join-party/join-party.command-handler';
 import { PartyMongoRepository } from './core/infrastructure/mongo/parties/repository';
+import { RetrieveUserPartiesQueryHandler } from './core/application/calendar-bot/parties/retrieve-userParties/retrieve-userParties.query-handler';
+import { RetrieveUserPartiesController } from './core/ui/api/calendar-bot/parties/retrieve-user-parties.controller';
 
 @Module({
   imports: [ ConfigModule.forRoot({
@@ -71,7 +73,7 @@ import { PartyMongoRepository } from './core/infrastructure/mongo/parties/reposi
   ],
   controllers: [AppController,RegisterMessageController,RegisterUserController,
     LoginUserController,GetTasksController,VersionController,DeleteTaskController,UpdateTaskController,
-    TasksController,RegisterPartyController, JoinPartyController],
+    TasksController,RegisterPartyController, JoinPartyController,RetrieveUserPartiesController],
   providers: [AppService, RegisterMessageCommandHandler, DeleteTaskCommandHandler,
      ReservationCreatedHandler,RegisterUserCommandHandler, UpdateTaskCommandHandler,
     JwtStrategy,LogInUserCommandHandler,AuthGuard,GetTasksQueryHandler,
@@ -84,8 +86,7 @@ import { PartyMongoRepository } from './core/infrastructure/mongo/parties/reposi
     {provide:ENCRYPTION_SERVICE,useClass:BcryptService},
     {provide:LOGGER_SYMBOL,useClass:LoggerService},
     {provide:PARTY_REPOSITORY,useClass:PartyMongoRepository},
-    RegisterPartyCommanHandler,
-    JoinPartyCommandHandler
+    RegisterPartyCommanHandler,JoinPartyCommandHandler, RetrieveUserPartiesQueryHandler
 
   ],
 })

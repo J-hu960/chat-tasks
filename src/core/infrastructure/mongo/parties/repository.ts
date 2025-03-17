@@ -42,11 +42,23 @@ export class PartyMongoRepository implements PartyRepository{
             ).exec();
           }
 
-      async findByName(party_name: string): Promise<Party> {
+   async findByName(party_name: string): Promise<Party> {
         const party = await this.partyModel.findOne({name:party_name}).exec()
         return this.toDomainObject(party)
     
     }
+
+
+    async getAllPartiesForUser(user_id: string): Promise<Party[]> {
+      const parties = await  this.partyModel.find({
+        $or: [{ created_by: user_id }, { users_ids: { $in: [user_id] } }]
+      }).exec();
+
+      const domainParties = parties.map(party=> this.toDomainObject(party))
+
+      return domainParties
+    }
+    
 
     private toDomainObject(mongoParty:PartyDocument):Party{
       const created_by = UserId.fromExisting(mongoParty.created_by)
@@ -56,6 +68,8 @@ export class PartyMongoRepository implements PartyRepository{
       return party
 
     }
+
+
         
 }
 

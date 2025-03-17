@@ -9,6 +9,7 @@ import { TaskHour } from "./value-objects/hour";
 import { TaskId } from "./value-objects/id";
 import { TaskTitle } from "./value-objects/title";
 import { UpdateTaskCommand } from "src/core/application/calendar-bot/tasks/update-task/update-task.command";
+import { PartyId } from "../parties/value-objects/id";
 
 export class Task extends AggregateRoot{
     private constructor(
@@ -18,11 +19,12 @@ export class Task extends AggregateRoot{
         readonly description:TaskDescription,
         readonly date:TaskDate,
         readonly duration:TaskDuration,
-        readonly hour:TaskHour
+        readonly hour:TaskHour,
+        readonly party_id?:PartyId
     ){
         super()
     }
-    static create(userId:UserId,titleStr:string,descriptionstr:string, dateStr:string,durationMinutes:number,hourInt:number,task_id?:TaskId){
+    static create(userId:UserId,titleStr:string,descriptionstr:string, dateStr:string,durationMinutes:number,hourInt:number,party_id?:PartyId,task_id?:TaskId,){
         const id = task_id || TaskId.new();
         const title = TaskTitle.create(titleStr);
         const description = TaskDescription.create(descriptionstr);
@@ -30,7 +32,7 @@ export class Task extends AggregateRoot{
         const duration = TaskDuration.create(durationMinutes);
         const hour = TaskHour.create(hourInt)
 
-        const task = new Task(id,userId,title,description,date,duration,hour);
+        const task = new Task(id,userId,title,description,date,duration,hour,party_id);
 
         task.recordEvent(TaskCreatedEvent.fromTask(task)) 
 

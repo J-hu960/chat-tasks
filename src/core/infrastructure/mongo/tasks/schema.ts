@@ -1,7 +1,6 @@
 
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
-import { UserModel } from '../users/schema';
+import  { HydratedDocument } from 'mongoose';
 
 export type TaskDocument = HydratedDocument<TaskModel>;
 
@@ -33,6 +32,10 @@ export class TaskModel {
   
   @Prop({ type: String, ref: 'User', required: true })
   user_id: string;
+
+  @Prop({ type: String, ref: 'Party', required: true ,default:'none'})
+  party_id: string;
+  
   
 
 }

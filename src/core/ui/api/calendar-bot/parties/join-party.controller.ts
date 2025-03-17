@@ -25,7 +25,7 @@ export class JoinPartyController{
         @Body() joinpartyDTO:JoinPartyDTO,
         @Res() response:Response){
         try {
-            const user_id = (request['user'])
+            const user_id = (request['user'].sub)
             const party = this.joinPartyCommandHandler.handle(
                 new JoinPartyCommand(user_id,joinpartyDTO.name,joinpartyDTO.code)
             );

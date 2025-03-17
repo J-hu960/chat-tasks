@@ -7,6 +7,7 @@ import { TaskRepository } from 'src/core/domain/calendar-bot/tasks/tasks.reposit
 import { TaskModel } from './schema';
 import { UserId } from 'src/core/domain/auth/users/value-objects/id';
 import { TaskId } from 'src/core/domain/calendar-bot/tasks/value-objects/id';
+import { PartyId } from 'src/core/domain/calendar-bot/parties/value-objects/id';
 
 
 
@@ -22,7 +23,8 @@ export class MongoTaskRepository implements TaskRepository {
       mongoTask.date,
       mongoTask.duration,
       mongoTask.hour,
-      TaskId.fromExisting(mongoTask.id)
+      TaskId.fromExisting(mongoTask.id),
+     PartyId.fromExisting(mongoTask.party_id)
     );
   }
   
@@ -36,13 +38,15 @@ export class MongoTaskRepository implements TaskRepository {
         duration:task.duration.toMinutes(),
         hour:task.hour.hour,
         date:task.date.date,
-        user_id:task.userId.value
+        user_id:task.userId.value,
+        party_id:task.party_id.value
+      
 
     });
     await createdTask.save();
   }
 
-  async getForUserAndDaterange(userId: string, date1: string, date2: string): Promise<Task[]> {
+  async getForUserAndDaterange(userId: string,user_partiesIds:string[], date1: string, date2: string): Promise<Task[]> {
     const domainTasks = [];
     
     // Crear las fechas en formato de cadena 'YYYY-MM-DD'
@@ -50,14 +54,18 @@ export class MongoTaskRepository implements TaskRepository {
     const endDate = new Date(date2).toISOString().split("T")[0];
 
     const tasks = await this.taskModel
-      .find({
-        user_id: userId, 
-        date: {
-          $gte: startDate, 
-          $lte: endDate, 
-        },
-      })
-      .exec();
+    .find({
+      $or: [
+        { user_id: userId },
+        { party_id: { $in: user_partiesIds } } 
+      ],
+      date: {
+        $gte: startDate, 
+        $lte: endDate, 
+      },
+    })
+    .exec();
+  
 
     for (let i = 0; i < tasks.length; i++) {
         const task = this.mapToDomainTask(tasks[i]);

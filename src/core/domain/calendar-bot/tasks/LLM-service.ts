@@ -1,10 +1,9 @@
-import { symbol } from "zod";
-import { MessageContent } from "../messages/value-objects/content";
 import { Task } from "./task";
 import { UserId } from "../../auth/users/value-objects/id";
+import { Party } from "../parties/party";
 
 export interface LLMService{
-    generateTask(message:string,userId:UserId):Promise<Task>
+    generateTask(message:string,userId:UserId,UserParties:Party[]):Promise<Task>
 }
 
 export const LLMSERVICE = Symbol('llm-service')
