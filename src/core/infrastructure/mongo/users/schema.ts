@@ -24,6 +24,9 @@ export class UserModel {
   @Prop({required:true,default: new Date})
   last_modified: Date;
   
+  @Prop({required:false,default: new Date})
+  last_activity_check: Date;
+  
   @Prop()
   verification_code: string;
 

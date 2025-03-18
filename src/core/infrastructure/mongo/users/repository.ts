@@ -36,9 +36,18 @@ export class MongoUserRepository implements UserRepository {
     return this.toDomainUser(userDoc);
   }
 
+  async updateUserLastCheckActivity(user_id:string,new_date: Date): Promise<void> {
+    await this.userModel.findOneAndUpdate(
+      { id: user_id },
+      { $set: { last_activity_check: new_date } },
+      { new: true, runValidators: true }
+    );
+
+  }
+
   private toDomainUser(userDoc: UserDocument): User {
-    const domainUser = User.fromMongoDoc(UserId.fromExisting(userDoc.id),userDoc.password,userDoc.username,userDoc.mail);
+    const domainUser = User.fromMongoDoc(UserId.fromExisting(userDoc.id),userDoc.password,userDoc.username,userDoc.mail,userDoc.last_activity_check);
     console.log(domainUser.id)
-   return domainUser
+    return domainUser
   }
 }

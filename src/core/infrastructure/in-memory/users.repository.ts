@@ -29,4 +29,8 @@ export class UserRepositoryInmemory implements UserRepository{
         return undefined
     }
 
+    async updateUserLastCheckActivity(user_id: string, new_date: Date): Promise<void> {
+        return
+    }
+
 }

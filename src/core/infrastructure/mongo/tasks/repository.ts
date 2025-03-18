@@ -28,8 +28,6 @@ export class MongoTaskRepository implements TaskRepository {
     );
   }
   
-  
-
   async save(task: Task){
     const createdTask = new this.taskModel({
         id:task.id.value,
@@ -47,7 +45,6 @@ export class MongoTaskRepository implements TaskRepository {
   }
 
   async getForUserAndDaterange(userId: string,user_partiesIds:string[], date1: string, date2: string): Promise<Task[]> {
-    const domainTasks = [];
     
     // Crear las fechas en formato de cadena 'YYYY-MM-DD'
     const startDate = new Date(date1).toISOString().split("T")[0];
@@ -67,16 +64,32 @@ export class MongoTaskRepository implements TaskRepository {
     .exec();
   
 
-    for (let i = 0; i < tasks.length; i++) {
-        const task = this.mapToDomainTask(tasks[i]);
-        domainTasks.push(task);
+    return tasks.map(this.mapToDomainTask);
+
+  }
+
+  async getNewActivityForUser(userId: string,user_partiesIds:string[],user_last_check:Date,): Promise<Task[]> {  
+
+    const domainTasks = [];
+
+  
+    const tasks = await this.taskModel.find({
+      $and: [
+        { user_id: { $ne: userId } }, 
+        { party_id: { $in: user_partiesIds } }, 
+        { created_at: { $gte: user_last_check } }
+      ]
+    }).exec();
+
+    for(let i = 0; i<tasks.length; i++){
+      domainTasks.push(this.mapToDomainTask(tasks[i]))
     }
-
+    
     return domainTasks;
-}
 
+  }
 
-async delete(task_id: string): Promise<void> {
+  async delete(task_id: string): Promise<void> {
   console.log(`eliminando la task con id: ${task_id}`);
 
   // Verifica que la tarea exista antes de intentar eliminarla
@@ -88,10 +101,7 @@ async delete(task_id: string): Promise<void> {
 
   const result = await this.taskModel.deleteOne({ id: task_id });
   console.log(`Resultado de eliminación: ${result.deletedCount}`);
-}
-
-
- 
+  }
 
   async findById(task_id: string): Promise<Task> {
     try {
@@ -127,6 +137,4 @@ async delete(task_id: string): Promise<void> {
 
     );
   }
-
- 
 }

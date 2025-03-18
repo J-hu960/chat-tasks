@@ -60,6 +60,10 @@ export class TaskRepositoryInmemory implements TaskRepository{
 
 
     }
+
+    getNewActivityForUser(userId: string, user_partiesIds: string[], user_last_check: Date): Promise<Task[]> {
+        return 
+    }
     
 
 

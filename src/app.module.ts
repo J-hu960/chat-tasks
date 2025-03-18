@@ -51,6 +51,10 @@ import { JoinPartyCommandHandler } from './core/application/calendar-bot/parties
 import { PartyMongoRepository } from './core/infrastructure/mongo/parties/repository';
 import { RetrieveUserPartiesQueryHandler } from './core/application/calendar-bot/parties/retrieve-userParties/retrieve-userParties.query-handler';
 import { RetrieveUserPartiesController } from './core/ui/api/calendar-bot/parties/retrieve-user-parties.controller';
+import { UpdateLastActivityCheckController } from './core/ui/api/users/update-lastActivityCheck.controller';
+import { UpdateLastActivityCheckCommandHandler } from './core/application/users/update-lastCheck/update-lastActivityCheck.command-handler';
+import { GetNewActivityController } from './core/ui/api/calendar-bot/tasks/get-new-activity.controller';
+import { GetNewActivityQueryHandler } from './core/application/calendar-bot/tasks/get-new-activity-for-user/get-new-activity.query-handler';
 
 @Module({
   imports: [ ConfigModule.forRoot({
@@ -73,9 +77,10 @@ import { RetrieveUserPartiesController } from './core/ui/api/calendar-bot/partie
   ],
   controllers: [AppController,RegisterMessageController,RegisterUserController,
     LoginUserController,GetTasksController,VersionController,DeleteTaskController,UpdateTaskController,
-    TasksController,RegisterPartyController, JoinPartyController,RetrieveUserPartiesController],
+    GetNewActivityController, TasksController,RegisterPartyController, JoinPartyController,RetrieveUserPartiesController,
+    UpdateLastActivityCheckController],
   providers: [AppService, RegisterMessageCommandHandler, DeleteTaskCommandHandler,
-    MessageCreatedEventHandler,RegisterUserCommandHandler, UpdateTaskCommandHandler,
+    MessageCreatedEventHandler,RegisterUserCommandHandler, UpdateTaskCommandHandler,GetNewActivityQueryHandler,
     JwtStrategy,LogInUserCommandHandler,AuthGuard,GetTasksQueryHandler,
     {provide:MESSAGE_REPOSITORY,useClass:MessagesRepositoryInmemory},
     {provide:EVENTEMMITER_NEST,useClass:EventEmmiterNest},
@@ -86,7 +91,7 @@ import { RetrieveUserPartiesController } from './core/ui/api/calendar-bot/partie
     {provide:ENCRYPTION_SERVICE,useClass:BcryptService},
     {provide:LOGGER_SYMBOL,useClass:LoggerService},
     {provide:PARTY_REPOSITORY,useClass:PartyMongoRepository},
-    RegisterPartyCommanHandler,JoinPartyCommandHandler, RetrieveUserPartiesQueryHandler
+    RegisterPartyCommanHandler,JoinPartyCommandHandler, RetrieveUserPartiesQueryHandler,UpdateLastActivityCheckCommandHandler
 
   ],
 })

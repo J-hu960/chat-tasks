@@ -6,14 +6,15 @@ import { Username } from "./value-objects/username";
 import { ENCRYPTION_SERVICE, EncryptionService } from "../CryptService";
 
 export class User{
-    private readonly created_at:Date;
-    private readonly updated_at:Date;
-    private readonly isActive:boolean;
+     readonly created_at:Date;
+     readonly updated_at:Date;
+     readonly isActive:boolean;
    private constructor(
      readonly id:UserId,
      readonly username:Username,
      readonly password:UserPassword,
      readonly email:UserMail,
+     readonly last_check?:Date
     
    ){
         this.id = id;
@@ -23,6 +24,8 @@ export class User{
         this.updated_at = new Date;
         this.created_at = new Date;
         this.isActive = true;
+        this.last_check = last_check || new Date;
+        
    }
 
    static  create(usernamestr:string,plainpassword:string,emailstr:string){
@@ -36,14 +39,14 @@ export class User{
         
    }
 
-   static fromMongoDoc(user_id:UserId,hashed_pass:string,usernameStr:string,emailStr:string){
+   static fromMongoDoc(user_id:UserId,hashed_pass:string,usernameStr:string,emailStr:string,last_activity_check:Date){
      const id = user_id;
      const email = UserMail.create(emailStr)
      const username = Username.create(usernameStr);
      const hashed_password =UserPassword.fromExisting(hashed_pass)
      
 
-     return new User(id,username,hashed_password,email);
+     return new User(id,username,hashed_password,email,last_activity_check);
 
    }
 }
