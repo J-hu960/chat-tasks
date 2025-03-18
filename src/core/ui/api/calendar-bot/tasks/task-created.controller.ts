@@ -48,6 +48,7 @@ export class TasksController implements OnModuleInit, OnModuleDestroy {
 
     if(task.payload.party_id){
       const users_ids = await this.partyRepository.getUsersFromParty(task.payload.party_id)
+      console.log(users_ids)
       for(let i = 0; i < users_ids.length ; i++){
         const clientStream = this.clients.get(userId);
         if (clientStream) {
