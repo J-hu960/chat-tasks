@@ -8,6 +8,7 @@ export class TaskDTO {
     date: string;
     duration: number;
     hour: number;
+    partyId:string;
 
     constructor(task: Task) {
         this.id = task.id.value;
@@ -17,5 +18,6 @@ export class TaskDTO {
         this.date = task.date.getISODate();
         this.duration = task.duration.toMinutes();
         this.hour = task.hour.hour;
+        this.partyId = task.party_id.value || '';
     }
 }

@@ -22,11 +22,12 @@ export class PartyMongoRepository implements PartyRepository{
     }
 
     async save(party:Party){
+      const userIds = party.users_id.map(id=>id.value)
         const newParty =  new this.partyModel({
             id:party.id.value,
             name:party.name.name,
             created_by:party.created_by.value,
-            users_ids:party.users_id,
+            users_ids:userIds,
             created_at:party.created_at,
             code:party.code.code,
             last_modified:party.created_at

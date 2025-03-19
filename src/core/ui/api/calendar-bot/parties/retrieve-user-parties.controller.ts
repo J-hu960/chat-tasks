@@ -30,9 +30,9 @@ export class RetrieveUserPartiesController{
         @Req() request: Request,
         @Res() response:Response){
         try {
-            const created_by = (request['user'].sub)
+            const user_id = (request['user'].sub)
             const user_parties = await this.retrieveUserPartiesQueryHandler.handle(
-                new RetrieveUserPartiesQuery(created_by)
+                new RetrieveUserPartiesQuery(user_id)
             );
 
             const response_values = user_parties.map(party=>{

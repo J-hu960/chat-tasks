@@ -2,7 +2,6 @@ import { Controller, Inject, Sse, Query, OnModuleDestroy, OnModuleInit, MessageE
 import { OnEvent } from '@nestjs/event-emitter';
 import { Observable, Subject } from 'rxjs';
 import { PARTY_REPOSITORY, PartyRepository } from 'src/core/domain/calendar-bot/parties/party.repository';
-import { Task } from 'src/core/domain/calendar-bot/tasks/task';
 import { TaskCreatedEvent, TaskCreatedPayload } from 'src/core/domain/calendar-bot/tasks/task-created.event';
 import { EVENTEMMITER_NEST, EventEmmiterNest } from 'src/core/infrastructure/eventPublisher';
 
@@ -50,7 +49,7 @@ export class TasksController implements OnModuleInit, OnModuleDestroy {
       const users_ids = await this.partyRepository.getUsersFromParty(task.payload.party_id)
       console.log(users_ids)
       for(let i = 0; i < users_ids.length ; i++){
-        const clientStream = this.clients.get(userId);
+        const clientStream = this.clients.get(users_ids[i]);
         if (clientStream) {
           console.log(`📩 Enviando tarea al cliente ${userId}`);
           clientStream.next({ data: task });
